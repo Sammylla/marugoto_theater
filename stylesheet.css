@@ -213,3 +213,8 @@ body {
     transform: translate(-50%, -50%);
   }
 }
+
+html, body {
+  overflow-x: hidden;
+}
+
