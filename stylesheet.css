@@ -1,0 +1,215 @@
+/* ========== Base / Reset (軽量) ========== */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  color: #0f172a;
+  background: #ffffff;
+  font-family: system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  padding:
+    env(safe-area-inset-top)
+    env(safe-area-inset-right)
+    env(safe-area-inset-bottom)
+    env(safe-area-inset-left);
+}
+
+/* ========== Header (固定) ========== */
+.site-header {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 117px;               /* 指定の高さ */
+  background: #000;            /* 透け防止 */
+  z-index: 100;
+  /* 影が要れば ↓ を有効化 */
+  /* box-shadow: 0 2px 8px rgba(0,0,0,.08); */
+}
+
+/* ヘッダーの下からコンテンツ開始（重なり防止） */
+.site-main {
+  padding-top: 117px;          /* ヘッダーの高さと一致 */
+}
+
+/* ========== Hero ========== */
+.hero {
+  position: relative;
+  width: 100%;
+  /* 画面の高さに合わせたい場合は min-height を使う（任意） */
+  /* min-height: calc(100dvh - 117px); */
+}
+
+/* 画像は端まで・余白ナシ・比率維持 */
+.hero__img {
+  display: block;
+  width: 100vw;                /* 画面幅いっぱい */
+  height: auto;
+  margin: 0;
+}
+
+/* 画像の上に薄い黒幕（読みやすさUP） */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.4);  /* 0.4〜0.6で調整 */
+  z-index: 1;
+}
+
+/* 中央テキスト */
+.hero__title {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  color: #fff;
+  text-align: center;
+  width: 100vw;                 /* 行長：改行を遅くする */
+  padding: 0 1em;              /* 端の安全マージン */
+  line-height: 1.3;
+  font-size: 2.1rem;           /* モバイル見出し */
+  text-shadow: 0 2px 6px rgba(0,0,0,.5);
+  z-index: 2;                  /* オーバーレイより上 */
+
+   /* ここから追加！ 👇 */
+  opacity: 0;                      /* 最初は透明 */
+  transform: translate(-50%, -45%);/* ちょい上から出てくる感じ */
+  animation: fadeInUp 1.5s ease-out forwards;
+  animation-delay: 0.3s;           /* ページ読み込み後に少し間をおく */
+}
+
+/* 画像の下に通常コンテンツが来る場合の余白（任意） */
+/* .container { max-width: 1120px; margin: 24px auto; padding: 0 16px; } */
+
+/* シナリオ全体の配置と文字スタイル */
+/* ----- 全体レイアウト（好みで調整） ----- */
+/* ===== 全体レイアウト ===== */
+.scenario {
+  width: 85vw;
+  max-width: 700px;
+  margin: 80px auto;
+  text-align: center;
+  color: #111;
+  line-height: 1.8;
+}
+
+/* ===== タイトル ===== */
+.main-title {
+  margin: 0 0 28px;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* 共通アニメーションの初期状態 */
+.main-title .line1,
+.main-title .line2,
+.scenario > p {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 1.2s ease-out forwards;
+}
+
+/* タイトル行（1・2行目） */
+.main-title .line1 { animation-delay: 0.2s; }
+.main-title .line2 { animation-delay: 0.5s; }
+
+/* 段落（p）順にふわっと */
+.scenario > p:nth-of-type(1)  { animation-delay: 0.9s; }
+.scenario > p:nth-of-type(2)  { animation-delay: 1.2s; }
+.scenario > p:nth-of-type(3)  { animation-delay: 1.5s; }
+.scenario > p:nth-of-type(4)  { animation-delay: 1.8s; }
+.scenario > p:nth-of-type(5)  { animation-delay: 2.1s; }
+.scenario > p:nth-of-type(6)  { animation-delay: 2.4s; }
+.scenario > p:nth-of-type(7)  { animation-delay: 2.7s; }
+.scenario > p:nth-of-type(8)  { animation-delay: 3.0s; }
+.scenario > p:nth-of-type(9)  { animation-delay: 3.3s; }
+.scenario > p:nth-of-type(10) { animation-delay: 3.6s; }
+
+/* ===== アニメーション定義 ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Keyframes ===== */
+@keyframes fadeInFromLeft {
+  from { opacity: 0; transform: translateX(-80px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeInFromRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ユーザーがアニメーション軽減を希望する場合に配慮（任意） */
+/* @media (prefers-reduced-motion: reduce) {
+  .main-title .line1,
+  .main-title .line2,
+  .scenario > p{
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+} */
+.images img.right{
+    display: block;
+    width: 75%;
+    margin-left: -90px;
+    margin-top: -150px;
+
+}
+.images{
+    display: block;
+    margin-top: -200px;
+}
+.friends{
+    display: block;
+    margin-left: 160px;
+    margin-top: -150px;
+    width: 85%;
+}
+
+.casts h1{
+    text-align: center;
+    font-size: 1.7rem;
+    margin-top: 100px;
+}
+
+/* アニメーション定義 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ========== 小さめ端末の微調整 ========== */
+@media (max-width: 360px) {
+  .hero__title { font-size: 1.6rem; }
+}
+
+/* ========== 将来の拡張（タブレット以上） ========== */
+@media (min-width: 768px) {
+  .hero__title { font-size: 2.2rem; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -55%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
